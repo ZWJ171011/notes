@@ -89,3 +89,54 @@ new Foo() instanceof Foo  // instanceof 二元运算符
         this永远（一辈子）跟父级走。
 
             var fn = function(){}
+            
+            
+## 数组的扩展
+替代数组的 apply 方法
+
+下面是扩展运算符取代apply方法的一个实际的例子，应用Math.max方法，简化求出一个数组最大元素的写法。
+
+
+// ES5 的写法
+Math.max.apply(null, [14, 3, 77])
+
+// ES6 的写法
+Math.max(...[14, 3, 77])
+
+// 等同于
+Math.max(14, 3, 77);
+
+## 2.Array.from() 
+
+Array.from方法用于将两类对象转为真正的数组：类似数组的对象（array-like object）和可遍历（iterable）的对象（包括ES6新增的数据结构Set和Map）。
+
+下面是一个类似数组的对象，Array.from将它转为真正的数组。
+
+let arrayLike = {
+    '0': 'a',
+    '1': 'b',
+    '2': 'c',
+    length: 3
+};
+
+// ES5的写法
+var arr1 = [].slice.call(arrayLike); // ['a', 'b', 'c']
+
+// ES6的写法
+let arr2 = Array.from(arrayLike); // ['a', 'b', 'c']
+
+实际应用中，常见的类似数组的对象是DOM操作返回的NodeList集合，以及函数内部的arguments对象。Array.from都可以将它们转为真正的数组。
+
+// NodeList对象
+let ps = document.querySelectorAll('p');
+Array.from(ps).forEach(function (p) {
+  console.log(p);
+});
+
+// arguments对象
+function foo() {
+  var args = Array.from(arguments);
+  // ...
+}
+
+
